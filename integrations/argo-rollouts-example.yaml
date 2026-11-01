@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: payment-service
+  namespace: civicguard-lab
+  labels:
+    app.kubernetes.io/name: payment-service
+    civicguard.io/managed: "true"
+spec:
+  replicas: 5
+  strategy:
+    canary:
+      canaryService: payment-service-canary
+      stableService: payment-service-stable
+      trafficRouting:
+        nginx:
+          stableIngress: payment-service-ingress
+      steps:
+        - setWeight: 10
+        - pause: { duration: 30s }
+        - analysis:
+            templates:
+              - templateName: civicguard-canary-guardrails
+        - setWeight: 25
+        - pause: { duration: 30s }
+        - setWeight: 50
+        - pause: { duration: 30s }
+        - setWeight: 100
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: civicguard-canary-guardrails
+  namespace: civicguard-lab
+spec:
+  metrics:
+    - name: error-rate-guardrail
+      interval: 10s
+      successCondition: result[0] <= 0.01
+      failureLimit: 1
+      provider:
+        prometheus:
+          address: http://prometheus.monitoring:9090
+          query: |
+            sum(rate(http_requests_total{service="payment-service", status=~"5.*"}[1m]))
+            /
+            sum(rate(http_requests_total{service="payment-service"}[1m]))
+

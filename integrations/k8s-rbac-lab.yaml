@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: civicguard-lab
+  labels:
+    civicguard.io/sandbox: "isolated"
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: civicguard-lab-operator
+  namespace: civicguard-lab
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: civicguard-operator-restricted
+  namespace: civicguard-lab
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets"]
+    verbs: ["get", "list", "watch", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["pods", "services", "configmaps"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["argoproj.io"]
+    resources: ["rollouts", "analysisruns"]
+    verbs: ["get", "list", "watch", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: civicguard-operator-binding
+  namespace: civicguard-lab
+subjects:
+  - kind: ServiceAccount
+    name: civicguard-lab-operator
+    namespace: civicguard-lab
+roleRef:
+  kind: Role
+  name: civicguard-operator-restricted
+  apiGroup: rbac.authorization.k8s.io
+

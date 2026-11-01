@@ -1,0 +1,52 @@
+# OpenTelemetry Collector Configuration for CivicGuard Autopilot
+# Collects traces & metrics, derives topology through servicegraph connector
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  batch:
+    timeout: 1s
+    send_batch_size: 256
+  memory_limiter:
+    check_interval: 1s
+    limit_percentage: 75
+    spike_limit_percentage: 20
+
+connectors:
+  servicegraph:
+    latency_histogram_buckets: [10ms, 50ms, 100ms, 250ms, 500ms, 1s, 2s, 5s]
+    dimensions:
+      - http.method
+      - http.status_code
+    store:
+      ttl: 2m
+      max_items: 1000
+
+exporters:
+  otlphttp/civicguard:
+    endpoint: http://127.0.0.1:8000/api/telemetry
+    encoding: json
+
+  prometheus:
+    endpoint: 0.0.0.0:8889
+    namespace: civicguard
+
+  logging:
+    verbosity: basic
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [servicegraph, otlphttp/civicguard]
+    metrics:
+      receivers: [otlp, servicegraph]
+      processors: [memory_limiter, batch]
+      exporters: [prometheus, otlphttp/civicguard]
+

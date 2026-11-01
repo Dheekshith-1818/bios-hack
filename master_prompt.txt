@@ -1,0 +1,374 @@
+<USER_REQUEST>
+1. Intelligent infrastructure monitoring
+These features continuously monitor the digital public infrastructure.
+Live Service Monitoring – Monitor the health of all connected services.
+Live Dependency Graph – Automatically discover which services depend on other services.
+Dynamic Graph Updates – Add or remove service relationships as new telemetry arrives.
+Metrics Monitoring – Monitor latency, errors, CPU saturation and request throughput.
+Log Monitoring – Collect and analyze structured application logs.
+Distributed Trace Monitoring – Track requests across multiple microservices.
+Service Health Status – Display healthy, observing, anomalous and recovered services.
+Dependency Confidence Tracking – Track how reliable each discovered service relationship is.
+Stale Dependency Detection – Remove outdated service relationships.
+Topology History – Store previous dependency graph snapshots.
+2. AI-powered anomaly and incident detection
+Anomaly Detection – Identify unusual changes in service performance.
+Transient Noise Detection – Recognize temporary spikes that do not represent genuine failures.
+False Alert Suppression – Prevent unnecessary incident notifications.
+Multi-Signal Detection – Combine metrics, logs and traces to identify genuine problems.
+Change-Point Detection – Identify when service behavior starts changing significantly.
+EWMA Monitoring – Track changes in performance using exponentially weighted averages.
+CUSUM Detection – Detect persistent increases in latency, errors and CPU usage.
+Adaptive Baselines – Learn normal service behavior over time.
+Baseline Drift Detection – Recognize legitimate changes in normal traffic patterns.
+Incident Confirmation – Confirm an incident only when sufficient evidence is available.
+Incident Deduplication – Combine multiple related symptoms into one main incident.
+Recovery Detection – Confirm recovery only after multiple healthy observation windows.
+Insufficient Telemetry Detection – Identify when there is not enough information to determine service health.
+3. Root Cause Analysis (RCA)
+This module identifies which service is most likely responsible for an incident.
+Automated Root Cause Identification – Find the probable starting point of an incident.
+Top-3 Root Cause Ranking – Display the three most likely root causes.
+Evidence-Based Ranking – Use actual metrics, traces, logs and graph relationships.
+Temporal Analysis – Identify which service started showing problems first.
+Anomaly Magnitude Analysis – Compare the severity of abnormalities across services.
+Downstream Impact Analysis – Identify which dependent services were affected.
+Trace Path Analysis – Examine request paths to locate problematic dependencies.
+Structured Log Analysis – Use error patterns and log evidence.
+Contradictory Evidence Detection – Display evidence that disagrees with the suspected root cause.
+Explainable RCA – Explain why a particular service was ranked first.
+Evidence Timestamp Tracking – Show when the supporting evidence was collected.
+RCA Confidence/Strength Score – Display a heuristic ranking from 0–100, not a falsely calibrated probability.
+4. Cascading failure prediction
+Failure Cascade Prediction – Predict which services might fail if one service becomes unhealthy.
+Reverse Dependency Analysis – Trace failure propagation from a failing dependency to its callers.
+Multi-Hop Failure Prediction – Predict failures across multiple service levels.
+Blast Radius Estimation – Estimate how many services could be affected by an action or failure.
+Critical Service Impact Analysis – Give greater importance to critical public services.
+Propagation Risk Scoring – Calculate the potential risk of a failure spreading.
+Dependency Path Visualization – Show the path through which failures may propagate.
+Uncertain Edge Detection – Highlight dependency relationships with insufficient evidence.
+Observed vs Predicted Impact – Distinguish services already affected from services predicted to be affected.
+5. Remediation Proof – Main innovative feature
+Core innovation
+Remediation Proof
+A time-limited, inspectable evidence certificate created before any recovery action.
+It records:
+What went wrong.
+Why the system suspects a particular service.
+What evidence supports the diagnosis.
+What recovery action is proposed.
+Which services and resources can be affected.
+Whether the action is permitted.
+How the system will verify the recovery.
+How the system will reverse the action if it fails.
+Automatic Proof Generation – Generate a proof before executing remediation.
+Evidence References – Attach supporting logs, metrics and traces.
+Root Cause Evidence – Include ranked root-cause candidates.
+Graph Version Recording – Record the dependency graph version used for diagnosis.
+Counter-Evidence Recording – Include evidence against the diagnosis.
+Blast Radius Documentation – Specify the maximum permitted impact.
+Action Documentation – Record the exact proposed recovery action.
+Inverse Action Documentation – Record how to reverse the action.
+Policy Decision Recording – Include why an action was allowed or denied.
+Guardrail Documentation – Record the safety limits.
+Canary Measurement Recording – Store control and treatment measurements.
+Proof Expiration – Automatically expire outdated proofs.
+SHA-256 Integrity Hash – Generate a hash to detect changes to proof contents.
+Proof Revalidation – Recheck evidence and permissions immediately before execution.
+Proof Export – Allow users to inspect and export remediation proofs.
+6. Automated recovery and remediation
+Automatic Remediation Proposal – Suggest a recovery action based on the incident.
+Policy-Based Authorization – Check whether the action is permitted.
+Human Approval – Require human approval for sensitive operations.
+Automatic Cache Rerouting – Move a limited percentage of traffic away from a failing cache replica.
+Release Rollback – Return a faulty software release to a known-good version.
+Controlled Scaling – Increase service replicas within configured limits.
+Feature Flag Disabling – Disable approved problematic features.
+Safe Replica Restart – Restart eligible non-singleton stateless replicas.
+No-Action Option – Escalate an incident without performing remediation.
+Pre-Action Configuration Snapshot – Save the original configuration.
+Action Reversibility – Ensure that an action has a known inverse.
+Remediation Cooldown – Prevent repeated actions in a short period.
+Action Budget – Limit how many recovery actions can occur.
+Concurrent Action Protection – Prevent multiple conflicting actions on the same incident.
+Idempotent Execution – Prevent duplicate execution of the same approved action.
+7. Policy engine and safety controls
+Deterministic Policy Engine – Evaluate recovery actions using defined rules.
+Fail-Closed Authorization – Deny actions when required evidence is missing.
+Evidence Freshness Validation – Reject outdated evidence.
+Proof Integrity Validation – Reject invalid or modified proofs.
+Rollback Plan Validation – Prevent actions without a rollback procedure.
+Target Validation – Reject ambiguous or unauthorized targets.
+Blast Radius Limits – Restrict how much infrastructure can be affected.
+Root Cause Strength Threshold – Require sufficient RCA strength.
+Critical Service Protection – Apply stricter approval requirements to payment and identity services.
+Minimum Canary Sample Validation – Require enough observations before promotion.
+Protected SLO Guardrails – Prevent actions that significantly worsen service performance.
+Operator Role Validation – Separate operator and viewer permissions.
+Policy Denial Audit – Record every denied action.
+OPA/Rego Policy Support – Provide an optional external policy evaluation integration.
+8. Canary testing and automatic rollback
+This is one of the most important parts of the project.
+10% Traffic Canary – Initially expose the proposed change to only 10% of traffic.
+90% Control Group – Keep the remaining traffic on the original configuration.
+Treatment vs Control Comparison – Compare the changed environment against the unchanged environment.
+Canary Health Monitoring – Monitor service performance during testing.
+Incremental Promotion – Progressively increase traffic from 10% to 25%, 50% and 100%.
+Automatic Promotion – Promote only after successful guardrail checks.
+Regression Detection – Detect when a proposed recovery makes performance worse.
+Automatic Rollback – Reverse a failed remediation.
+Rollback Verification – Verify that the original configuration was restored.
+Rollback Failure Escalation – Escalate if rollback cannot be verified.
+Missing Telemetry Protection – Stop promotion if telemetry becomes unavailable.
+Canary Failure Explanation – Show exactly why a recovery was rejected.
+Recovery State Tracking – Track every stage of the recovery process.
+9. Four built-in simulation scenarios
+The project includes four deterministic scenarios for demonstrating the complete system.
+[AI Anomaly Detection in Observability: Methods, Tools & Best Practices](https://images.openai.com/static-rsc-4/NNrxKWNfkR_jKKenK-sOZhrw46XMKpVLWZk0fyj3Tgxvk-WH2FenvoBtiNh7R84Wl1t0aAQyW7uyNZzWuwhM6vE3MISn96un5Ik7uKvZAxKYi8148oN8485NJ-jd7qUgyT4gb1rqtNfhI0upCrF66hX6T5Irym-dpn8ZbHgt_s0?purpose=inline)
+Scenario 1: Transient Noise Suppression
+Introduce a temporary payment-service latency spike.
+Detect the anomaly.
+Recognize that supporting evidence is insufficient.
+Suppress the false alert.
+Avoid unnecessary recovery actions.
+[Cyberion - AI-Powered Cybersecurity Solutions](https://images.openai.com/static-rsc-4/EwYjbPa0EoYQ8QH_sRnWtVRxCUtEmgg6S5OdggRSIm8KW_m9C1GyYfGUNLdSS46c28A-o2BsOPPourPaflRNeyDO8v825jz-muQ8yJBs-5Mr8hrdZjVkWXJGY1Bf95T2_Hj3ZBVxi4dnDd94KXK7oCg5R5wyNzkmDKEIDxfHFww?purpose=inline)
+Scenario 2: Cache Failure and Cascade
+Simulate Redis replica A failure.
+Detect Identity and Eligibility degradation.
+Predict the cascading failure.
+Identify the cache as the probable root cause.
+Generate Remediation Proof.
+Reroute 10% traffic to replica B.
+Test and progressively promote recovery.
+[Helm Release Lifecycle Explained: Install, Upgrade, Rollback | by SwayamOps | Apr, 2026 | Medium](https://images.openai.com/static-rsc-4/9J5rd7CjVB51JyRwviBBQlmSKB8UmOs7hkobgJWg2JCjc8vBsrNWlj2x_YyPe7NmL9z5tA5WhcDyvdzLWOrQMOf6yn_uiREa0PF49CoFFe8hSu8iLnX2BWtjjqNPXKSwLBEZPww3rGOpBhIU2rP0-zKjvnWzp4vEkvc4gt-c-jw?purpose=inline)
+Scenario 3: Faulty Payment Deployment
+Introduce a faulty payment-service v2 release.
+Detect increased errors.
+Identify the faulty deployment.
+Propose returning to v1.
+Apply policy checks.
+Perform canary testing and rollback verification.
+[Agent rollback drills: 9 runbooks for real chaos | by Bhagya Rana | Mar, 2026 | Medium](https://images.openai.com/static-rsc-4/kdlWfhian0O1SkCahRAqsQg9EgS41YKhp_uonmUg5g6aJx79r04Stry7aUk8xH-qRPrS1BfekBoUOtfusocxMWNEpvSfyeUN0LW1g-HXFeGG1euh1quLXlSah70d2MmEp0GGtAydT67ycRNyRqCVr9ruFYSQhDglt8uhQviW1XM?purpose=inline)
+Scenario 4: Unsafe Remediation
+Propose a seemingly attractive recovery.
+Introduce a measurable regression during canary.
+Detect worsening performance.
+Stop promotion.
+Automatically roll back.
+Display audit records and rollback verification.
+10. Judge Mode
+Automated Judge Mode – Run a scripted approximately three-minute demonstration.
+Healthy Infrastructure Introduction – Show the initial service graph.
+Transient Spike Demonstration – Show noise suppression.
+Persistent Failure Demonstration – Show a genuine incident.
+Root Cause Demonstration – Show evidence-based diagnosis.
+Cascade Visualization – Show predicted service impact.
+Remediation Proof Demonstration – Show the generated proof.
+Policy Evaluation Demonstration – Show action authorization.
+Successful Canary Demonstration – Show progressive recovery.
+Unsafe Recovery Demonstration – Show regression detection and rollback.
+Post-Run Evaluation – Display measured results.
+Judge Mode also includes:
+Pause
+Resume
+Reset
+Speed control
+Skip Narrative
+11. Live dashboard and user interface
+[Engineering & DevOps AI Dashboards | Marketplace](https://images.openai.com/static-rsc-4/C96yA_-zVOki4mawNfoFnAnc0O_ycThcSGpAkv2GyzmJJ4uYWlWqiFI72puG-a7gufeyPfa62Eqo40F23P0bUMRypeDPn7x-iVlF20bMnPiIWpWH4PfN3oZJSqYiitjogZxpR0r9ig2clT2MG_kYyFUTvt1laS9AwT7sOihqs14?purpose=inline)
+[staas.fund](https://staas.fund/dashboards/engineering/?utm_source=chatgpt.com)
+The dashboard is divided into three main sections.
+A. Left panel – Infrastructure dependency graph
+Interactive service dependency graph.
+Live service status indicators.
+Root cause highlighting.
+Cascading failure animation.
+Canary progress animation.
+Cache replica grouping.
+Individual service selection.
+Service metrics, traces and logs drill-down.
+Graph zoom, pan and auto-fit.
+Accessible graph text alternative.
+B. Center panel – Monitoring and incident timeline
+Live p95 latency chart.
+Error rate chart.
+Request throughput chart.
+Payment success rate chart.
+Baseline visualization.
+Incident onset markers.
+Canary measurement segments.
+Incident chronology.
+Incident filtering.
+Incident detail view.
+Measured evaluation results.
+C. Right panel – Diagnosis and remediation
+Top-three root cause candidates.
+Evidence cards.
+Contradictory evidence display.
+Cascade prediction.
+Remediation Proof viewer.
+Policy decision explanation.
+Action target and affected traffic percentage.
+Previous configuration display.
+Control vs treatment measurements.
+Proof hash and expiry.
+Propose button.
+Approve button.
+Rollback button.
+Export Proof button.
+Additional dashboard interactions
+Real-time notifications/toasts.
+Backend connection status.
+WebSocket reconnection.
+Automatic state synchronization after reconnection.
+Search and filter logs.
+Search and filter incidents.
+JSON audit export.
+Keyboard help shortcut.
+Responsive mobile dashboard.
+Offline read-only preview.
+12. Landing website and 3D experience
+[BIOGLITTER INOCOS - 3D Launch Film :: Behance](https://images.openai.com/static-rsc-4/SdW6x_Is-Ei2-QXZzuG2fwsXRwsPZPwxRgipJx62hUaUwrNCxqlQYLtVoZeqZsrv9rocoQUKOGIh1L2mshTav921-fR_EYBeYd18Vt-U0g3CcnijXkgcJRB0VwDEDtxBqI4jVpYE-nr8vG_1eyVuLmJ6Do2OYCFoiHk3oc6uzVY?purpose=inline)
+[behance.net](https://www.behance.net/gallery/247629027/BIOGLITTER-INOCOS-3D-Launch-Film?utm_source=chatgpt.com)
+The landing page follows the supplied Melli 3D website reference.
+Five-section editorial landing page.
+Lavender and violet visual theme.
+Animated headline text.
+Fixed navigation bar.
+Scroll-based flower animations.
+Scroll-based parallax effects.
+Photorealistic 3D bumblebee.
+Procedurally generated bee wings.
+Wing flapping animation.
+Scroll-controlled bee flight.
+Mouse-responsive bee movement.
+Desktop and mobile animation configurations.
+Loading animation.
+2D fallback if 3D assets fail.
+Reduced-motion accessibility.
+Dark/light navigation theme changes.
+Living system section with live graph preview.
+Find the cause section with live signal preview.
+Safety proof section with live policy/canary status.
+Working navigation and CTAs.
+Open control room button.
+Watch it heal button.
+Launch Judge Mode button.
+Four scenario launch buttons.
+Footer with working internal links.
+13. Audit trail and accountability
+Complete Audit Trail – Record all important system activities.
+Monotonic Event Sequencing – Give audit events sequential identifiers.
+Hash-Linked Audit Records – Link events using previous and current hashes.
+Audit Integrity Verification – Detect modifications to audit records.
+Incident History – Preserve incident lifecycle information.
+Remediation History – Record every recovery attempt.
+Policy Decision History – Record authorization decisions.
+Canary History – Preserve canary measurements.
+Rollback History – Record rollback attempts and outcomes.
+Audit Export – Export the complete audit event chain.
+Proof and Evidence Traceability – Connect decisions to their supporting evidence.
+14. Evaluation and performance measurement
+Incident detection precision.
+Incident detection recall.
+False alerts per hour.
+False positive rate.
+Transient noise suppression rate.
+Top-1 root cause accuracy.
+Top-3 root cause accuracy.
+Mean Time to Detect (MTTD).
+Mean Time to Identify (MTTI).
+Mean Time to Recover (MTTR).
+Full-rollout regression count.
+Canary-caught regression count.
+Rollback failure count.
+Per-run benchmark results.
+At least 30 deterministic evaluation runs.
+Optional 100-run stress testing.
+CSV evaluation export.
+JSON evaluation export.
+TARGET vs MEASURED comparison.
+15. Integrations and external technology support
+FastAPI – Backend API.
+SQLite – Persistent data storage.
+NetworkX – Dependency graph algorithms.
+NumPy – Numerical calculations.
+OpenTelemetry – Distributed telemetry ingestion.
+OTLP – Telemetry protocol support.
+Prometheus – Infrastructure metrics integration.
+OPA/Rego – External policy engine.
+Kubernetes Lab Adapter – Optional real infrastructure testing.
+Argo Rollouts – Deployment canary and rollback integration.
+Chaos Mesh – Controlled infrastructure fault injection.
+WebSockets – Real-time dashboard updates.
+REST API – External service communication.
+These integrations are optional. The local simulator must work without Kubernetes, Docker, cloud credentials or paid APIs.
+16. Security and privacy
+Synthetic citizen data only.
+No real financial transactions.
+No real Aadhaar/PAN or banking information.
+No production infrastructure access by default.
+Restricted Kubernetes test namespace.
+Least-privilege permissions.
+Operator/viewer role separation.
+Server-side action authorization.
+Explicit human approval for sensitive operations.
+Protection against unauthorized infrastructure changes.
+Protection against arbitrary shell commands.
+Input validation.
+HTML injection protection.
+Telemetry ingestion limits.
+API rate limiting.
+Secret protection.
+Audit logging for override requests.
+Automatic safety halt when telemetry is missing.
+No uncontrolled remediation loops.
+Overall feature architecture
+This is how all the modules connect:
+1. Infrastructure Monitoring
+Metrics · Logs · Traces · Service Graph
+2. Intelligent Detection
+Anomaly Detection · Noise Suppression · Incident Confirmation
+3. Diagnosis and Prediction
+Root Cause Analysis · Cascade Prediction · Blast Radius
+4. Remediation Proof
+Evidence · Proposed Action · Risk · Rollback Plan
+5. Policy Engine
+Allow · Deny · Human Approval
+6. Canary Testing
+10% → 25% → 50% → 100%
+Success
+Progressive promotion and recovery
+Failure
+Automatic rollback and escalation
+7. Audit and Evaluation
+Proofs · History · Performance Metrics · Exports
+My observation: What makes CivicGuard different?
+The project is not simply an infrastructure monitoring dashboard.
+Its main combination is:
+Discover dependencies automatically instead of relying entirely on predefined infrastructure maps.
+Distinguish genuine failures from temporary noise.
+Identify probable root causes using multiple sources of evidence.
+Predict cascading failures before they spread further.
+Generate a Remediation Proof before allowing recovery.
+Test recovery on a limited percentage of traffic.
+Automatically reverse a recovery that makes the system worse.
+Maintain an auditable record of every decision.
+The Remediation Proof + Policy Engine + Canary Testing + Automatic Rollback is the central differentiator.
+
+check all the features that i mentioned and verify all features mentioned in above
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-10-31T23:58:00+05:30.
+
+The user's current state is as follows:
+Active Document: c:\Users\K.Dheekshith\OneDrive\Desktop\thapper_hack\scripts\smoke_test.py (LANGUAGE_UNSPECIFIED)
+Cursor is on line: 1
+Other open documents:
+- c:\Users\K.Dheekshith\OneDrive\Desktop\thapper_hack\backend\config.py (LANGUAGE_UNSPECIFIED)
+- c:\Users\K.Dheekshith\OneDrive\Desktop\thapper_hack\tests\test_api.py (LANGUAGE_UNSPECIFIED)
+- c:\Users\K.Dheekshith\OneDrive\Desktop\thapper_hack\tests\test_audit.py (LANGUAGE_UNSPECIFIED)
+- c:\Users\K.Dheekshith\OneDrive\Desktop\thapper_hack\backend\schemas.py (LANGUAGE_UNSPECIFIED)
+- c:\Users\K.Dheekshith\OneDrive\Desktop\thapper_hack\backend\store.py (LANGUAGE_UNSPECIFIED)
+</ADDITIONAL_METADATA>

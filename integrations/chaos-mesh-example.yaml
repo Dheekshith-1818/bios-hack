@@ -1,0 +1,29 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: redis-replica-a-latency
+  namespace: civicguard-lab
+  labels:
+    civicguard.io/scenario: "cache-cascade"
+spec:
+  action: delay
+  mode: one
+  selector:
+    namespaces:
+      - civicguard-lab
+    labelSelectors:
+      app: redis-cache
+      role: replica-a
+  delay:
+    latency: "250ms"
+    jitter: "20ms"
+  direction: to
+  target:
+    selector:
+      namespaces:
+        - civicguard-lab
+      labelSelectors:
+        app: identity-service
+    mode: all
+  duration: "180s"
+
